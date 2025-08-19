@@ -4,7 +4,7 @@ from matplotlib.pyplot import bar
 
 file_path = "C:\\Users\\Kerem\\Desktop\\cr.txt"
 
-class Barkod:
+class Barcode:
     def __init__(self, coordinate, type, value):
         self.coordinate = coordinate
         self.type = type
@@ -20,7 +20,9 @@ class Barkod:
         self.value = value
 
     def __str__(self) -> str:
-        return f"Barkod(coordinate={self.coordinate}, type={self.type}, value={self.value})"
+        return f"Barcode(coordinate={self.coordinate}, type={self.type}, value={self.value})"
+
+Barcodes = []
 
 def find_mid(x1,y1,x3,y3):
     x=(x1+x3)/2
@@ -47,14 +49,19 @@ def extract_barcode_value(line):
     barcode_value = value_match.group(1) if value_match else None
     return barcode_value
 
-barkodlar = []  # Barkod nesnelerini saklamak için liste
-# Örnek kullanım
-with open(file_path, "r", encoding="utf-8") as file:
-    for line in file:
-        coords = extract_coordinates(line.strip())
-        barcode_type = extract_barcode_type(line.strip())
-        barcode_value = extract_barcode_value(line.strip())
-        barkod = Barkod(coordinate=coords, type=barcode_type, value=barcode_value)
-        barkodlar.append(barkod)
-for b in barkodlar:
-    print(b)  # Barkod nesnelerini yazdır
+def is_inside_box(box_coords, barcode_mid_coords):
+    x,y = barcode_mid_coords
+    x1, y1, x2, y2 = box_coords
+    if (x1 < x < x2) and (y1 < y < y2):
+        return True
+    return False
+
+def parse_barcode_file(file_path):
+    with open(file_path, "r", encoding="utf-8") as file:
+        for line in file:
+            coords = extract_coordinates(line.strip())
+            barcode_type = extract_barcode_type(line.strip())
+            barcode_value = extract_barcode_value(line.strip())
+            barcode = Barcode(coordinate=coords, type=barcode_type, value=barcode_value)
+            Barcodes.append(barcode)
+    # return Barcodes

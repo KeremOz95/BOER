@@ -26,7 +26,8 @@ def print_size(Path):
     print(f"Size of {Path}: {ftp.size(Path)} bytes")
 
 def size_check(Path):
-    if ftp.size(Path) <= 0:
+    size = ftp.size(Path)
+    if size is None or size <= 0:
         return False
     else:
         return True
