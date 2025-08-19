@@ -72,8 +72,8 @@ def main():
                     #         if Coordinates.is_inside_box(i.coordinates , b.coordinate):
                     #             i.add_child(b)
                     #             print(f"Barcode {b} is inside box {i}")
-            for i in Box_Detection.Boxes:
-                print(f"Barcode {i.childs} is inside box {i}")
+            # for i in Box_Detection.Boxes:
+            #     print(f"Barcode {i.childs} is inside box {i}")
 
         time.sleep(0.5)
         # print("Waiting for new files...")
